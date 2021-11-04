@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -35,7 +36,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+
+
         navigationView.setNavigationItemSelectedListener(this);
+        toolbar.setTitle("Home");
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentHome()).commit();
+            toolbar.setTitle("Home");
             navigationView.setCheckedItem(R.id.navHome);
         }
     }
@@ -64,12 +69,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.navHome:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentHome()).commit();
+                toolbar.setTitle("Home");
                 break;
             case R.id.navForm:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentForm()).commit();
+                toolbar.setTitle("Form Page");
                 break;
             case R.id.navFormDetail:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentFormDetail()).commit();
+                toolbar.setTitle("Form Detail");
                 break;
 
         }
