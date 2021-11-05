@@ -1,5 +1,6 @@
 package com.example.exampleproject;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.ReceiverCallNotAllowedException;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +36,7 @@ import butterknife.ButterKnife;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class FragmentForm extends Fragment {
+public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSetListener {
 
 
     @BindView(R.id.buttonSave)
@@ -46,9 +49,6 @@ public class FragmentForm extends Fragment {
     EditText editTextDate;
     @BindView(R.id.imageViewCalendar)
     ImageView imgCalendar;
-    @BindView(R.id.calendarView)
-    CalendarView calendarView;
-
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
@@ -59,10 +59,8 @@ public class FragmentForm extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_form, container, false);
         ButterKnife.bind(this, view);
-        calendarView.setVisibility(View.INVISIBLE);
         editTextDate.setEnabled(false);
         loadData();
-        selectBirthday();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +72,7 @@ public class FragmentForm extends Fragment {
         imgCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                calendarView.setVisibility(View.VISIBLE);
+                selectBirthday();
             }
         });
         return view;
@@ -84,9 +82,9 @@ public class FragmentForm extends Fragment {
     private void saveData() {
         String tmpName = editTextName.getText().toString();
         String tmpSurname = editTextSurname.getText().toString();
+        String tmpDate = editTextDate.getText().toString();
 
-
-        if (!tmpName.isEmpty() && !tmpSurname.isEmpty()) {
+        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty()) {
 
             insertItem(tmpName, tmpSurname);
             myAdapter.notifyItemInserted(modelList.size());
@@ -94,21 +92,23 @@ public class FragmentForm extends Fragment {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             Gson gson = new Gson();
             String json = gson.toJson(modelList);
-            editor.putString("task list", json);
+            editor.putString("customer list", json);
             editor.apply();
-
         } else if (tmpName.isEmpty()) {
 
             editTextName.setHintTextColor(Color.RED);
             editTextName.requestFocus();
             Toast.makeText(getContext(), "Fill in the name fields", Toast.LENGTH_LONG).show();
-
         } else if (tmpSurname.isEmpty()) {
 
             editTextSurname.setHintTextColor(Color.RED);
             editTextSurname.requestFocus();
             Toast.makeText(getContext(), "Fill in the surname fields", Toast.LENGTH_LONG).show();
+        } else if (tmpDate.isEmpty()) {
 
+            editTextDate.setHintTextColor(Color.RED);
+            editTextDate.requestFocus();
+            Toast.makeText(getContext(), "Fill in the date of birth fields", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -116,7 +116,7 @@ public class FragmentForm extends Fragment {
     private void loadData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("task list", null);
+        String json = sharedPreferences.getString("customer list", null);
         Type type = new TypeToken<ArrayList<ExampleItem>>() {
         }.getType();
         modelList = gson.fromJson(json, type);
@@ -131,15 +131,21 @@ public class FragmentForm extends Fragment {
         modelList.add(new ExampleItem(name, surname));
     }
 
-    public void selectBirthday(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                String date = i2 + "." + i1 + "." + i;
-                editTextDate.setText(date);
-                calendarView.setVisibility(View.INVISIBLE);
-            }
-        });
+    public void selectBirthday() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getContext(),
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        int i3 = i1 + 1;
+        String date = i2 + "." + i3 + "." + i;
+        editTextDate.setText(date);
     }
 }

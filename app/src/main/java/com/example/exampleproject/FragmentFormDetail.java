@@ -45,7 +45,7 @@ public class FragmentFormDetail extends Fragment {
     private void loadData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("task list", null);
+        String json = sharedPreferences.getString("customer list", null);
         Type type = new TypeToken<ArrayList<ExampleItem>>() {
         }.getType();
         modelList = gson.fromJson(json, type);

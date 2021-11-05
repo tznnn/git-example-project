@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/unit16dp"
             android:layout_marginEnd="@dimen/unit32dp"
             android:hint="@string/hint_name"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,17 +47,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editTextDate"
             app:layout_constraintTop_toBottomOf="@+id/editTextSurname" />
-
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#90CDFD"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
         <EditText
             android:id="@+id/editTextDate"
