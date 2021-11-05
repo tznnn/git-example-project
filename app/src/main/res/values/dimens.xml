@@ -3,4 +3,5 @@
     <dimen name="unit16dp">16dp</dimen>
     <dimen name="unit8dp">8dp</dimen>
     <dimen name="unit32dp">32dp</dimen>
+    <dimen name="unit64dp">64dp</dimen>
 </resources>

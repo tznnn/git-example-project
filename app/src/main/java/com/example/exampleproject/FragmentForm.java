@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +42,13 @@ public class FragmentForm extends Fragment {
     EditText editTextName;
     @BindView(R.id.editTextSurname)
     EditText editTextSurname;
+    @BindView(R.id.editTextDate)
+    EditText editTextDate;
+    @BindView(R.id.imageViewCalendar)
+    ImageView imgCalendar;
+    @BindView(R.id.calendarView)
+    CalendarView calendarView;
+
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
@@ -47,13 +59,22 @@ public class FragmentForm extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_form, container, false);
         ButterKnife.bind(this, view);
+        calendarView.setVisibility(View.INVISIBLE);
+        editTextDate.setEnabled(false);
         loadData();
-
+        selectBirthday();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveData();
+            }
+        });
+
+        imgCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendarView.setVisibility(View.VISIBLE);
             }
         });
         return view;
@@ -79,11 +100,13 @@ public class FragmentForm extends Fragment {
         } else if (tmpName.isEmpty()) {
 
             editTextName.setHintTextColor(Color.RED);
+            editTextName.requestFocus();
             Toast.makeText(getContext(), "Fill in the name fields", Toast.LENGTH_LONG).show();
 
         } else if (tmpSurname.isEmpty()) {
 
             editTextSurname.setHintTextColor(Color.RED);
+            editTextSurname.requestFocus();
             Toast.makeText(getContext(), "Fill in the surname fields", Toast.LENGTH_LONG).show();
 
         }
@@ -106,5 +129,17 @@ public class FragmentForm extends Fragment {
     private void insertItem(String name, String surname) {
         myAdapter = new ExampleAdapter(getContext(), modelList);
         modelList.add(new ExampleItem(name, surname));
+    }
+
+    public void selectBirthday(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                String date = i2 + "." + i1 + "." + i;
+                editTextDate.setText(date);
+                calendarView.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }
