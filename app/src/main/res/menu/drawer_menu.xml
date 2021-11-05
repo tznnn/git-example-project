@@ -7,17 +7,17 @@
         <item
             android:id="@+id/navHome"
             android:icon="@drawable/ic_home"
-            android:title="Home" />
+            android:title="@string/anasayfa" />
 
         <item
             android:id="@+id/navForm"
             android:icon="@drawable/ic_launcher_background"
-            android:title="Form" />
+            android:title="@string/form_ekranı" />
 
         <item
             android:id="@+id/navFormDetail"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="Form Detail" />
+            android:icon="@drawable/ic_form_list"
+            android:title="@string/form_listesi" />
 
 
     </group>

@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         navigationView.setNavigationItemSelectedListener(this);
-        toolbar.setTitle("Home");
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentHome()).commit();
-            toolbar.setTitle("Home");
+            setTitle("Anasayfa");
             navigationView.setCheckedItem(R.id.navHome);
         }
     }
@@ -69,15 +67,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.navHome:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentHome()).commit();
-                toolbar.setTitle("Home");
+                toolbar.setTitle("Anasayfa");
                 break;
             case R.id.navForm:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentForm()).commit();
-                toolbar.setTitle("Form Page");
+                toolbar.setTitle("Form Ekranı");
                 break;
             case R.id.navFormDetail:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentFormDetail()).commit();
-                toolbar.setTitle("Form Detail");
+                toolbar.setTitle("Form Listesi");
                 break;
 
         }
