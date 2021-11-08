@@ -1,17 +1,29 @@
 package com.example.exampleproject;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.ReceiverCallNotAllowedException;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +35,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,8 +53,14 @@ import com.google.gson.reflect.TypeToken;
 public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSetListener {
 
 
+    private static final int RESULT_OK = -1;
+    private static final int preqCode = 1;
+    private static final int requestCode = 1;
+
     @BindView(R.id.buttonSave)
     Button btnSave;
+    @BindView(R.id.buttonProfilePhoto)
+    Button btnSelectPhoto;
     @BindView(R.id.editTextName)
     EditText editTextName;
     @BindView(R.id.editTextSurname)
@@ -49,9 +69,12 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     EditText editTextDate;
     @BindView(R.id.imageViewCalendar)
     ImageView imgCalendar;
+    @BindView(R.id.imageViewProfile)
+    ImageView imgProfile;
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
+    public boolean imgSelected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,8 +98,19 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
                 selectBirthday();
             }
         });
-        return view;
 
+        btnSelectPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= 22) {
+                    checkAndRequestForPermission();
+                } else {
+                    openGallery();
+                }
+            }
+        });
+
+        return view;
     }
 
     private void saveData() {
@@ -84,7 +118,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         String tmpSurname = editTextSurname.getText().toString();
         String tmpDate = editTextDate.getText().toString();
 
-        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty()) {
+        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected) {
 
             insertItem(tmpName, tmpSurname);
             myAdapter.notifyItemInserted(modelList.size());
@@ -94,23 +128,27 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             String json = gson.toJson(modelList);
             editor.putString("customer list", json);
             editor.apply();
+            Toast.makeText(getContext(), "Kayıt Başarılı", Toast.LENGTH_SHORT).show();
+
         } else if (tmpName.isEmpty()) {
 
             editTextName.setHintTextColor(Color.RED);
             editTextName.requestFocus();
-            Toast.makeText(getContext(), "Fill in the name fields", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Lütfen Ad bölümünü doldurunuz", Toast.LENGTH_LONG).show();
         } else if (tmpSurname.isEmpty()) {
 
             editTextSurname.setHintTextColor(Color.RED);
             editTextSurname.requestFocus();
-            Toast.makeText(getContext(), "Fill in the surname fields", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Lütfen Soyad bölümünü doldurunuz", Toast.LENGTH_LONG).show();
         } else if (tmpDate.isEmpty()) {
 
             editTextDate.setHintTextColor(Color.RED);
             editTextDate.requestFocus();
-            Toast.makeText(getContext(), "Fill in the date of birth fields", Toast.LENGTH_LONG).show();
-        }
+            Toast.makeText(getContext(), "Lütfen doğum tarihinizi seçiniz", Toast.LENGTH_LONG).show();
+        } else if (!imgSelected) {
 
+            Toast.makeText(getContext(), "Lütfen profil fotoğrafı seçiniz", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void loadData() {
@@ -148,4 +186,35 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         String date = i2 + "." + i3 + "." + i;
         editTextDate.setText(date);
     }
+
+    private void checkAndRequestForPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(getContext(), "Lütfen uygulama ayarlarından gerekli izinleri açınız", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, preqCode);
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, preqCode);
+            }
+        } else
+            openGallery();
+    }
+
+    private void openGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, requestCode);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == requestCode && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            imgProfile.setImageURI(uri);
+            imgSelected = true;
+
+        }
+
+    }
+
 }
