@@ -82,6 +82,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
+
+    private PhoneNumber phoneNumber;
+
     public boolean imgSelected;
 
     @Override
