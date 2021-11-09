@@ -62,15 +62,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextSurname" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="@dimen/unit16dp"
+            android:text="@string/profil_fotografi"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/unit16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+
         <ImageView
             android:id="@+id/imageViewProfile"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/unit100dp"
+            android:layout_height="@dimen/unit100dp"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="4dp"
             android:src="@drawable/ic_photo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDate">
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
         </ImageView>
 
@@ -78,9 +91,9 @@
             android:id="@+id/buttonProfilePhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="100dp"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="@dimen/unit100dp"
             android:text="@string/fotograf_sec"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
@@ -88,19 +101,56 @@
 
         </Button>
 
+        <TextView
+            android:id="@+id/textViewLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/cinsiyet"
+            android:textColor="@color/black"
+            android:textSize="@dimen/unit16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLabel">
+
+            <RadioButton
+                android:id="@+id/radioButtonFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kadın" />
+
+            <RadioButton
+                android:id="@+id/radioButtonMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Erkek" />
+
+        </RadioGroup>
+
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="@dimen/unit16dp"
             android:layout_marginBottom="@dimen/unit16dp"
             android:text="@string/kaydet"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewProfile"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

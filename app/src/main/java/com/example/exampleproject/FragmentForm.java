@@ -32,6 +32,8 @@ import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +73,12 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     ImageView imgCalendar;
     @BindView(R.id.imageViewProfile)
     ImageView imgProfile;
+    @BindView(R.id.radioGroup)
+    RadioGroup radioGroup;
+    @BindView(R.id.radioButtonFemale)
+    RadioButton radioButtonFemale;
+    @BindView(R.id.radioButtonMale)
+    RadioButton radioButtonMale;
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
@@ -110,6 +118,20 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             }
         });
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedButtonId) {
+                switch (checkedButtonId) {
+                    case R.id.radioButtonFemale:
+                        Toast.makeText(getContext(), "Kadın seçildi" + radioButtonFemale.getId() + radioButtonMale.getText(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.radioButtonMale:
+                        Toast.makeText(getContext(), "Erkek seçildi" + radioButtonMale.getId() + radioButtonMale.getText(), Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
         return view;
     }
 
@@ -118,7 +140,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         String tmpSurname = editTextSurname.getText().toString();
         String tmpDate = editTextDate.getText().toString();
 
-        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected) {
+        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected && radioGroup.getCheckedRadioButtonId() != -1) {
 
             insertItem(tmpName, tmpSurname);
             myAdapter.notifyItemInserted(modelList.size());
@@ -148,6 +170,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         } else if (!imgSelected) {
 
             Toast.makeText(getContext(), "Lütfen profil fotoğrafı seçiniz", Toast.LENGTH_LONG).show();
+        } else if (radioGroup.getCheckedRadioButtonId() == -1) {
+
+            Toast.makeText(getContext(), "Lütfen cinsiyetinizi seçiniz", Toast.LENGTH_LONG).show();
         }
     }
 
