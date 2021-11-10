@@ -48,6 +48,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -59,10 +60,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     private static final int preqCode = 1;
     private static final int requestCode = 1;
 
-    @BindView(R.id.buttonSave)
-    Button btnSave;
-    @BindView(R.id.buttonProfilePhoto)
-    Button btnSelectPhoto;
     @BindView(R.id.editTextName)
     EditText editTextName;
     @BindView(R.id.editTextSurname)
@@ -104,33 +101,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         editTextDate.setEnabled(false);
         loadData();
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveData();
-            }
-        });
-
-        imgCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectBirthday();
-            }
-        });
-
-        btnSelectPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                textViewProfile.setTextColor(Color.BLACK);
-                if (Build.VERSION.SDK_INT >= 22) {
-                    checkAndRequestForPermission();
-                } else {
-                    openGallery();
-                }
-            }
-        });
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedButtonId) {
@@ -148,6 +118,26 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         });
 
         return view;
+    }
+
+    @OnClick(R.id.buttonSave)
+    public void saveClick() {
+        saveData();
+    }
+
+    @OnClick(R.id.buttonProfilePhoto)
+    public void profilePhotoSelect() {
+        textViewProfile.setTextColor(Color.BLACK);
+        if (Build.VERSION.SDK_INT >= 22) {
+            checkAndRequestForPermission();
+        } else {
+            openGallery();
+        }
+    }
+
+    @OnClick(R.id.imageViewCalendar)
+    public void openCalendar() {
+        selectBirthday();
     }
 
     private void saveData() {
