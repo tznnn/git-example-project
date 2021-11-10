@@ -63,15 +63,15 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextSurname" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
             android:layout_marginTop="@dimen/unit16dp"
             android:text="@string/profil_fotografi"
-            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="@dimen/unit16dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
@@ -83,7 +83,7 @@
             android:layout_marginTop="4dp"
             android:src="@drawable/ic_photo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/textViewProfile">
 
         </ImageView>
 
@@ -102,7 +102,7 @@
         </Button>
 
         <TextView
-            android:id="@+id/textViewLabel"
+            android:id="@+id/textViewGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -121,7 +121,7 @@
             android:layout_marginStart="@dimen/unit16dp"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLabel">
+            app:layout_constraintTop_toBottomOf="@+id/textViewGender">
 
             <RadioButton
                 android:id="@+id/radioButtonFemale"
@@ -138,7 +138,7 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textViewPhoneNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
@@ -154,13 +154,13 @@
             android:id="@+id/phoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="@dimen/unit4dp"
+            android:layout_marginEnd="@dimen/unit16dp"
             app:editTextHint="0 (xxx) xxx xx xx"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber" />
 
         <Button
             android:id="@+id/buttonSave"

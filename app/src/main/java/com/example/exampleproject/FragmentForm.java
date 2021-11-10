@@ -79,13 +79,21 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     RadioButton radioButtonFemale;
     @BindView(R.id.radioButtonMale)
     RadioButton radioButtonMale;
+    @BindView(R.id.textViewProfile)
+    TextView textViewProfile;
+    @BindView(R.id.textViewGender)
+    TextView textViewGender;
+    @BindView(R.id.textViewPhoneNumber)
+    TextView textViewPhoneNumber;
+    @BindView(R.id.phoneNumber)
+    PhoneNumber editTextPhoneNumber;
+
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
 
-    private PhoneNumber phoneNumber;
-
     public boolean imgSelected;
+    public int genderId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,6 +121,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         btnSelectPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                textViewProfile.setTextColor(Color.BLACK);
                 if (Build.VERSION.SDK_INT >= 22) {
                     checkAndRequestForPermission();
                 } else {
@@ -126,10 +136,12 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             public void onCheckedChanged(RadioGroup radioGroup, int checkedButtonId) {
                 switch (checkedButtonId) {
                     case R.id.radioButtonFemale:
-                        Toast.makeText(getContext(), "Kadın seçildi" + radioButtonFemale.getId() + radioButtonMale.getText(), Toast.LENGTH_SHORT).show();
+                        genderId = 0;
+                        textViewGender.setTextColor(Color.BLACK);
                         break;
                     case R.id.radioButtonMale:
-                        Toast.makeText(getContext(), "Erkek seçildi" + radioButtonMale.getId() + radioButtonMale.getText(), Toast.LENGTH_SHORT).show();
+                        textViewGender.setTextColor(Color.BLACK);
+                        genderId = 1;
                         break;
                 }
             }
@@ -142,8 +154,13 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         String tmpName = editTextName.getText().toString();
         String tmpSurname = editTextSurname.getText().toString();
         String tmpDate = editTextDate.getText().toString();
+        int tmpPhoneNumberLength = editTextPhoneNumber.getText().length();
+        int tmpGenderId = radioGroup.getCheckedRadioButtonId();
 
-        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected && radioGroup.getCheckedRadioButtonId() != -1) {
+
+        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected && tmpGenderId != -1 && tmpPhoneNumberLength == 17) {
+
+            textViewPhoneNumber.setTextColor(Color.BLACK);
 
             insertItem(tmpName, tmpSurname);
             myAdapter.notifyItemInserted(modelList.size());
@@ -153,6 +170,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             String json = gson.toJson(modelList);
             editor.putString("customer list", json);
             editor.apply();
+
             Toast.makeText(getContext(), "Kayıt Başarılı", Toast.LENGTH_SHORT).show();
 
         } else if (tmpName.isEmpty()) {
@@ -172,10 +190,16 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             Toast.makeText(getContext(), "Lütfen doğum tarihinizi seçiniz", Toast.LENGTH_LONG).show();
         } else if (!imgSelected) {
 
+            textViewProfile.setTextColor(Color.RED);
             Toast.makeText(getContext(), "Lütfen profil fotoğrafı seçiniz", Toast.LENGTH_LONG).show();
-        } else if (radioGroup.getCheckedRadioButtonId() == -1) {
+        } else if (tmpGenderId == -1) {
 
+            textViewGender.setTextColor(Color.RED);
             Toast.makeText(getContext(), "Lütfen cinsiyetinizi seçiniz", Toast.LENGTH_LONG).show();
+        } else if (tmpPhoneNumberLength != 17) {
+
+            textViewPhoneNumber.setTextColor(Color.RED);
+            Toast.makeText(getContext(), "Lütfen telefon numaranızı giriniz", Toast.LENGTH_LONG).show();
         }
     }
 

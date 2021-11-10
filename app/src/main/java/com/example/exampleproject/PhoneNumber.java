@@ -103,5 +103,7 @@ public class PhoneNumber extends LinearLayout {
 
     }
 
-
+    public Editable getText() {
+        return editTextPhone.getText();
+    }
 }
