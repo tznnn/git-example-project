@@ -162,18 +162,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber" />
 
+        <CheckBox
+            android:id="@+id/checkBoxVadeli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="@dimen/unit8dp"
+            android:text="@string/vadeli_hesap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+
+        <CheckBox
+            android:id="@+id/checkBoxVadesiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:text="@string/vadesiz_hesap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxVadeli" />
+
+        <CheckBox
+            android:id="@+id/checkBoxYatirim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:text="@string/yatirim_hesabi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxVadesiz" />
+
+        <CheckBox
+            android:id="@+id/checkBoxPortfoy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:text="@string/portfoy_hesabi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxYatirim" />
+
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="@dimen/unit16dp"
             android:layout_marginBottom="@dimen/unit16dp"
             android:text="@string/kaydet"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

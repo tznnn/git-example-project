@@ -16,4 +16,8 @@
     <string name="cinsiyet">Cinsiyet :</string>
     <string name="profil_fotografi">Profil Fotoğrafı :</string>
     <string name="telefon_numarasi">Telefon Numarası :</string>
+    <string name="portfoy_hesabi">Portföy Hesabı</string>
+    <string name="yatirim_hesabi">Yatırım Hesabı</string>
+    <string name="vadesiz_hesap">Vadesiz Hesap</string>
+    <string name="vadeli_hesap">Vadeli Hesap</string>
 </resources>
