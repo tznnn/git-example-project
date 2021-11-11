@@ -48,10 +48,11 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder
         String profileImage = mExampleList.get(position).getImageProfile();
 
         if (genderId == 0) {
-
-            holder.relativeLayout.setBackgroundColor(Color.RED);
+            int femaleColor = Color.parseColor("#ABFF6A9D");
+            holder.relativeLayout.setBackgroundColor(femaleColor);
         } else {
-            holder.relativeLayout.setBackgroundColor(Color.BLUE);
+            int maleColor = Color.parseColor("#9977C3FF");
+            holder.relativeLayout.setBackgroundColor(maleColor);
         }
 
         String nameSurname = name + " " + surname;
