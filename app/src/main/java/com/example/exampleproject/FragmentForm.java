@@ -101,6 +101,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
     public boolean imgSelected;
     public int genderId;
+    public Uri uri;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -191,15 +192,17 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         String tmpName = editTextName.getText().toString();
         String tmpSurname = editTextSurname.getText().toString();
         String tmpDate = editTextDate.getText().toString();
+        String tmpPhoneNumber = editTextPhoneNumber.getText().toString();
         int tmpPhoneNumberLength = editTextPhoneNumber.getText().length();
         int tmpGenderId = radioGroup.getCheckedRadioButtonId();
+        String tmpProfileImageId = uri.toString();
         checkBoxResults();
 
         if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected && tmpGenderId != -1 && tmpPhoneNumberLength == 17) {
 
             textViewPhoneNumber.setTextColor(Color.BLACK);
 
-            insertItem(tmpName, tmpSurname);
+            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, tmpProfileImageId);
             myAdapter.notifyItemInserted(modelList.size());
             SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -256,9 +259,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         }
     }
 
-    private void insertItem(String name, String surname) {
+    private void insertItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile) {
         myAdapter = new ExampleAdapter(getContext(), modelList);
-        modelList.add(new ExampleItem(name, surname));
+        modelList.add(new ExampleItem(name, surname, date, phoneNumber, genderId, imageProfile));
     }
 
     public void selectBirthday() {
@@ -301,18 +304,19 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == requestCode && resultCode == RESULT_OK && data != null) {
-            Uri uri = data.getData();
+            uri = data.getData();
             imgProfile.setImageURI(uri);
             imgSelected = true;
 
         }
 
     }
-    public void checkBoxResults(){
+
+    public void checkBoxResults() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(String s : checkBoxResult){
+        for (String s : checkBoxResult) {
             stringBuilder.append(s).append(" ");
-            Log.d("TAG", "checkBoxResults: "+stringBuilder.toString());
+            Log.d("TAG", "checkBoxResults: " + stringBuilder.toString());
         }
     }
 
