@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,8 +43,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder
 
         String name = mExampleList.get(position).getName();
         String surname = mExampleList.get(position).getSurname();
-        String date = mExampleList.get(position).getDate();
-        String phoneNumber = mExampleList.get(position).getPhoneNumber();
         int genderId = mExampleList.get(position).getGenderId();
         String profileImage = mExampleList.get(position).getImageProfile();
 
@@ -85,7 +84,8 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder
 
         @Override
         public void onClick(View view) {
-
+            int position = getAdapterPosition();
+            Toast.makeText(context, mExampleList.get(position).getName() + " " + mExampleList.get(position).getSurname() + " " + mExampleList.get(position).getDate(), Toast.LENGTH_SHORT).show();
         }
     }
 }
