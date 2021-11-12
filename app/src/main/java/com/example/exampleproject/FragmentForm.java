@@ -106,7 +106,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public boolean imgSelected;
     public int genderId;
     public Uri uri;
-
+    String tmpProfileImageUri;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -203,7 +203,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         String tmpPhoneNumber = editTextPhoneNumber.getText().toString();
         int tmpPhoneNumberLength = editTextPhoneNumber.getText().length();
         int tmpGenderId = radioGroup.getCheckedRadioButtonId();
-        String tmpProfileImageId = uri.toString();
         checkBoxResults();
         String tmpCheckBoxResult = cbInvisibleTxt.getText().toString();
 
@@ -211,7 +210,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
             textViewPhoneNumber.setTextColor(Color.BLACK);
 
-            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, tmpProfileImageId, tmpCheckBoxResult);
+            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, tmpProfileImageUri, tmpCheckBoxResult);
             myAdapter.notifyItemInserted(modelList.size());
             SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -321,6 +320,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
             uri = data.getData();
             imgProfile.setImageURI(uri);
+            tmpProfileImageUri = uri.toString();
             imgSelected = true;
         }
     }
