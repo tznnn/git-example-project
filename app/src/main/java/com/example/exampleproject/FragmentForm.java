@@ -93,6 +93,10 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     CheckBox cbYatirim;
     @BindView(R.id.checkBoxPortfoy)
     CheckBox cbPortfoy;
+    @BindView(R.id.textViewAccountType)
+    TextView accountTypeTxt;
+    @BindView(R.id.textViewCheckBoxInvisible)
+    TextView cbInvisibleTxt;
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
@@ -102,6 +106,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public boolean imgSelected;
     public int genderId;
     public Uri uri;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -165,6 +170,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public void checkboxVadesizClick() {
         if (cbVadesiz.isChecked()) {
             checkBoxResult.add(cbVadesiz.getText().toString());
+            accountTypeTxt.setTextColor(Color.BLACK);
         } else {
             checkBoxResult.remove(cbVadesiz.getText().toString());
         }
@@ -174,6 +180,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public void checkBoxYatirimClick() {
         if (cbYatirim.isChecked()) {
             checkBoxResult.add(cbYatirim.getText().toString());
+            accountTypeTxt.setTextColor(Color.BLACK);
         } else {
             checkBoxResult.remove(cbYatirim.getText().toString());
         }
@@ -183,6 +190,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public void checkBoxPortfoyClick() {
         if (cbPortfoy.isChecked()) {
             checkBoxResult.add(cbPortfoy.getText().toString());
+            accountTypeTxt.setTextColor(Color.BLACK);
         } else {
             checkBoxResult.remove(cbPortfoy.getText().toString());
         }
@@ -197,12 +205,13 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         int tmpGenderId = radioGroup.getCheckedRadioButtonId();
         String tmpProfileImageId = uri.toString();
         checkBoxResults();
+        String tmpCheckBoxResult = cbInvisibleTxt.getText().toString();
 
-        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected && tmpGenderId != -1 && tmpPhoneNumberLength == 17) {
+        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected && tmpGenderId != -1 && tmpPhoneNumberLength == 17 && !tmpCheckBoxResult.isEmpty()) {
 
             textViewPhoneNumber.setTextColor(Color.BLACK);
 
-            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, tmpProfileImageId);
+            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, tmpProfileImageId, tmpCheckBoxResult);
             myAdapter.notifyItemInserted(modelList.size());
             SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -243,6 +252,11 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             textViewPhoneNumber.setTextColor(Color.RED);
             textViewPhoneNumber.requestFocus();
             Toast.makeText(getContext(), "Lütfen telefon numaranızı giriniz", Toast.LENGTH_LONG).show();
+        } else if (tmpCheckBoxResult.isEmpty()) {
+
+            accountTypeTxt.setTextColor(Color.RED);
+            accountTypeTxt.requestFocus();
+            Toast.makeText(getContext(), "Lütfen hesap tipini seçiniz", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -259,9 +273,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         }
     }
 
-    private void insertItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile) {
+    private void insertItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile, String checkboxAccountResult) {
         myAdapter = new ExampleAdapter(getContext(), modelList);
-        modelList.add(new ExampleItem(name, surname, date, phoneNumber, genderId, imageProfile));
+        modelList.add(new ExampleItem(name, surname, date, phoneNumber, genderId, imageProfile, checkboxAccountResult));
     }
 
     public void selectBirthday() {
@@ -304,19 +318,18 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == requestCode && resultCode == RESULT_OK && data != null) {
+
             uri = data.getData();
             imgProfile.setImageURI(uri);
             imgSelected = true;
-
         }
-
     }
 
     public void checkBoxResults() {
         StringBuilder stringBuilder = new StringBuilder();
         for (String s : checkBoxResult) {
             stringBuilder.append(s).append(" ");
-            Log.d("TAG", "checkBoxResults: " + stringBuilder.toString());
+            cbInvisibleTxt.setText(stringBuilder.toString());
         }
     }
 

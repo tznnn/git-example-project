@@ -20,4 +20,5 @@
     <string name="yatirim_hesabi">Yatırım Hesabı</string>
     <string name="vadesiz_hesap">Vadesiz Hesap</string>
     <string name="vadeli_hesap">Vadeli Hesap</string>
+    <string name="hesap_tipi">Hesap Tipi :</string>
 </resources>

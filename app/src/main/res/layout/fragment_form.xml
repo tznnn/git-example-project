@@ -162,17 +162,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber" />
 
+        <TextView
+            android:id="@+id/textViewAccountType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="@dimen/unit16dp"
+            android:text="@string/hesap_tipi"
+            android:textColor="@color/black"
+            android:textSize="@dimen/unit16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+
         <CheckBox
             android:id="@+id/checkBoxVadeli"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="@dimen/unit8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/vadeli_hesap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewAccountType" />
 
         <CheckBox
             android:id="@+id/checkBoxVadesiz"
@@ -207,6 +220,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxYatirim" />
 
+
+        <TextView
+            android:id="@+id/textViewCheckBoxInvisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/unit16dp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxVadesiz"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
@@ -219,7 +242,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxPortfoy" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

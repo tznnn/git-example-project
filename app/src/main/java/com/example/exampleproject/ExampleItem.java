@@ -9,14 +9,16 @@ public class ExampleItem {
     private String phoneNumber;
     private int genderId;
     private String imageProfile;
+    private String checkboxAccountType;
 
-    public ExampleItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile) {
+    public ExampleItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile, String checkboxAccountType) {
         this.name = name;
         this.surname = surname;
         this.date = date;
         this.phoneNumber = phoneNumber;
         this.genderId = genderId;
         this.imageProfile = imageProfile;
+        this.checkboxAccountType = checkboxAccountType;
     }
 
     public String getName() {
@@ -65,5 +67,13 @@ public class ExampleItem {
 
     public void setImageProfile(String imageProfile) {
         this.imageProfile = imageProfile;
+    }
+
+    public String getCheckboxAccountType() {
+        return checkboxAccountType;
+    }
+
+    public void setCheckboxAccountType(String checkboxAccountType) {
+        this.checkboxAccountType = checkboxAccountType;
     }
 }
