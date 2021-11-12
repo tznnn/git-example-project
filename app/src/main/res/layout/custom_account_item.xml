@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/unit4dp"
+    android:background="#DDFBFF"
+    android:orientation="vertical"
+    android:padding="@dimen/unit8dp"
+    app:cardCornerRadius="@dimen/unit4dp">
+
+    <RelativeLayout
+        android:id="@+id/rowItemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewAccountType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hesap türü"
+            android:textSize="16sp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_arrow_right"
+            >
+
+        </ImageView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/unit16dp">
+
+        <TextView
+            android:id="@+id/textViewAccountNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hesap numarası"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewBrancNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Şube Numarası"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewBrancName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_toEndOf="@+id/textViewBrancNo"
+            android:text="Şube adı"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/unit8dp">
+
+        <TextView
+            android:id="@+id/textViewBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/unit4dp"
+            android:layout_toStartOf="@+id/textViewCurrency"
+            android:text="Bakiye"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/unit4dp"
+            android:text="TL"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
