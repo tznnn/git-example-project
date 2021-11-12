@@ -45,8 +45,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder
         String surname = mExampleList.get(position).getSurname();
         int genderId = mExampleList.get(position).getGenderId();
         String profileImage = mExampleList.get(position).getImageProfile();
-        String tmpCb = mExampleList.get(position).getCheckboxAccountType();
-        Log.d("TAG", "onBindViewHolder: " + tmpCb);
 
         if (genderId == 0) {
             int femaleColor = Color.parseColor("#ABFF6A9D");
@@ -57,7 +55,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder
         }
 
         String nameSurname = name + " " + surname;
-
         holder.nameSurname.setText(nameSurname);
         Picasso.get().load(profileImage).into(holder.profileImg);
     }
