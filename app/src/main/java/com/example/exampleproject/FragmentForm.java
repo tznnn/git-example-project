@@ -97,6 +97,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     TextView accountTypeTxt;
     @BindView(R.id.textViewCheckBoxInvisible)
     TextView cbInvisibleTxt;
+    @BindView(R.id.buttonSave2)
+    Button btntest;
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
@@ -194,6 +196,11 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         } else {
             checkBoxResult.remove(cbPortfoy.getText().toString());
         }
+    }
+
+    @OnClick(R.id.buttonSave2)
+    public void testClick() {
+
     }
 
     private void saveData() {

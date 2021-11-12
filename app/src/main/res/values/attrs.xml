@@ -4,4 +4,7 @@
         <attr name="defaultTextSize" format="integer" />
         <attr name="editTextHint" format="string" />
     </declare-styleable>
+    <declare-styleable name="CustomAccount">
+        <attr name="infoText" format="string" />
+    </declare-styleable>
 </resources>
