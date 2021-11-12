@@ -19,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -97,8 +99,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     TextView accountTypeTxt;
     @BindView(R.id.textViewCheckBoxInvisible)
     TextView cbInvisibleTxt;
-    @BindView(R.id.buttonSave2)
-    Button btntest;
+    @BindView(R.id.buttonOpenAccountFragment)
+    Button btnOpenAccountFragment;
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
@@ -198,9 +200,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         }
     }
 
-    @OnClick(R.id.buttonSave2)
-    public void testClick() {
-
+    @OnClick(R.id.buttonOpenAccountFragment)
+    public void openFragmentClick() {
+        accountSelectFragment();
     }
 
     private void saveData() {
@@ -338,6 +340,14 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             stringBuilder.append(s).append(" ");
             cbInvisibleTxt.setText(stringBuilder.toString());
         }
+    }
+
+    public void accountSelectFragment(){
+        FragmentCustomAccountSelection nextFrag= new FragmentCustomAccountSelection();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
 }
