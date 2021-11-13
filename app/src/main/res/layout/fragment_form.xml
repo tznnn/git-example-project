@@ -142,13 +142,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="@dimen/unit16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/telefon_numarasi"
             android:textColor="@color/black"
             android:textSize="@dimen/unit16dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextAccountInfo" />
 
         <com.example.exampleproject.PhoneNumber
             android:id="@+id/phoneNumber"
@@ -235,14 +235,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="@dimen/unit16dp"
-            android:layout_marginBottom="@dimen/unit16dp"
+            android:layout_marginTop="@dimen/unit8dp"
             android:text="Hesap Seç"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxPortfoy" />
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <EditText
+            android:id="@+id/editTextAccountInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="@dimen/unit4dp"
+            android:enabled="false"
+            android:hint="@string/secilen_hesap_bilgileri"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonOpenAccountFragment" />
 
         <Button
             android:id="@+id/buttonSave"
@@ -256,7 +265,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonOpenAccountFragment" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxPortfoy" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

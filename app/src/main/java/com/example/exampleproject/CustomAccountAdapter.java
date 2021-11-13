@@ -1,6 +1,9 @@
 package com.example.exampleproject;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.transition.Slide;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
@@ -53,7 +60,7 @@ public class CustomAccountAdapter extends RecyclerView.Adapter<CustomAccountAdap
         return accountList.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder {
+    public class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView accountType, accountNo, branchNo, branchName, accountBalance;
 
         public MyHolder(@NonNull View itemView) {
@@ -64,6 +71,24 @@ public class CustomAccountAdapter extends RecyclerView.Adapter<CustomAccountAdap
             branchNo = itemView.findViewById(R.id.textViewBrancNo);
             branchName = itemView.findViewById(R.id.textViewBrancName);
             accountBalance = itemView.findViewById(R.id.textViewBalance);
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            int position = getAdapterPosition();
+            Bundle bundle = new Bundle();
+            bundle.putString("branchName", accountList.get(position).getBranchName());
+            bundle.putInt("accountNo", accountList.get(position).getAccountNo());
+            bundle.putInt("branchNo", accountList.get(position).getBranchNo());
+            bundle.putInt("balance", accountList.get(position).getAccountBalance());
+            FragmentForm nextFrag = new FragmentForm();
+            nextFrag.setArguments(bundle);
+            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, nextFrag, null)
+                    .commit();
 
         }
     }

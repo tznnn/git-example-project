@@ -101,6 +101,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     TextView cbInvisibleTxt;
     @BindView(R.id.buttonOpenAccountFragment)
     Button btnOpenAccountFragment;
+    @BindView(R.id.editTextAccountInfo)
+    EditText accountInfoTxt;
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
@@ -110,7 +112,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public boolean imgSelected;
     public int genderId;
     public Uri uri;
-    String tmpProfileImageUri;
+    String tmpProfileImageUri, branchName;
+    int accountNo, branchNo, balance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -137,6 +140,15 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
                 }
             }
         });
+
+        if (this.getArguments() != null) {
+            Bundle bundle = this.getArguments();
+            branchName = bundle.getString("branchName");
+            accountNo = bundle.getInt("accountNo");
+            branchNo = bundle.getInt("branchNo");
+            balance = bundle.getInt("balance");
+            accountInfoTxt.setText(accountNo + " - " + branchNo + "  " + branchName + " / " + balance + " TL");
+        }
 
         return view;
     }
@@ -214,8 +226,11 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         int tmpGenderId = radioGroup.getCheckedRadioButtonId();
         checkBoxResults();
         String tmpCheckBoxResult = cbInvisibleTxt.getText().toString();
+        String accountInfo = accountInfoTxt.getText().toString();
 
-        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected && tmpGenderId != -1 && tmpPhoneNumberLength == 17 && !tmpCheckBoxResult.isEmpty()) {
+        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected
+                && tmpGenderId != -1 && tmpPhoneNumberLength == 17 && !tmpCheckBoxResult.isEmpty()
+                && !accountInfo.isEmpty()) {
 
             textViewPhoneNumber.setTextColor(Color.BLACK);
 
@@ -265,7 +280,13 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             accountTypeTxt.setTextColor(Color.RED);
             accountTypeTxt.requestFocus();
             Toast.makeText(getContext(), "Lütfen hesap tipini seçiniz", Toast.LENGTH_LONG).show();
+        } else if (accountInfo.isEmpty()) {
+
+            accountInfoTxt.setHintTextColor(Color.RED);
+            accountInfoTxt.requestFocus();
+            Toast.makeText(getContext(), "Lütfen bir hesap seçiniz", Toast.LENGTH_LONG).show();
         }
+
     }
 
     private void loadData() {
@@ -342,10 +363,10 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         }
     }
 
-    public void accountSelectFragment(){
-        FragmentCustomAccountSelection nextFrag= new FragmentCustomAccountSelection();
+    public void accountSelectFragment() {
+        FragmentCustomAccountSelection nextFrag = new FragmentCustomAccountSelection();
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, nextFrag, "findThisFragment")
+                .replace(R.id.fragmentContainer, nextFrag, null)
                 .addToBackStack(null)
                 .commit();
     }
