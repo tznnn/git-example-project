@@ -73,14 +73,14 @@
             android:textSize="@dimen/unit16dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
         <ImageView
             android:id="@+id/imageViewProfile"
             android:layout_width="@dimen/unit100dp"
             android:layout_height="@dimen/unit100dp"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/unit4dp"
             android:src="@drawable/ic_photo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewProfile">
@@ -92,12 +92,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginEnd="@dimen/unit100dp"
+            android:layout_marginTop="32dp"
             android:text="@string/fotograf_sec"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.218"
             app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDate">
+            app:layout_constraintTop_toBottomOf="@+id/textViewProfile">
 
         </Button>
 
@@ -105,21 +105,20 @@
             android:id="@+id/textViewGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="@dimen/unit16dp"
             android:text="@string/cinsiyet"
             android:textColor="@color/black"
             android:textSize="@dimen/unit16dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextAccountInfo" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewGender">
 
@@ -142,13 +141,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/unit16dp"
             android:text="@string/telefon_numarasi"
             android:textColor="@color/black"
             android:textSize="@dimen/unit16dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextAccountInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
 
         <com.example.exampleproject.PhoneNumber
             android:id="@+id/phoneNumber"
@@ -180,7 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/unit8dp"
             android:text="@string/vadeli_hesap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -235,10 +234,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/unit16dp"
-            android:layout_marginTop="@dimen/unit8dp"
+            android:layout_marginTop="@dimen/unit16dp"
             android:text="Hesap Seç"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
         <EditText
             android:id="@+id/editTextAccountInfo"
