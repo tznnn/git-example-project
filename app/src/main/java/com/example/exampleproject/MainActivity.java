@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -38,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
 
-
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
@@ -65,13 +67,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        String TAG = "createFormFragment";
         switch (item.getItemId()) {
             case R.id.navHome:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentHome()).commit();
                 toolbar.setTitle("Anasayfa");
                 break;
             case R.id.navForm:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentForm()).commit();
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentForm()).commit();
+                Fragment nextFrag = new FragmentForm();
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentContainer, nextFrag, TAG);
+                fragmentTransaction.addToBackStack("formFragment");
+                fragmentTransaction.commit();
+
                 toolbar.setTitle("Form Ekranı");
                 break;
             case R.id.navFormDetail:

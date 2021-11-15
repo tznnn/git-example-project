@@ -141,7 +141,15 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             }
         });
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         if (this.getArguments() != null) {
+
             Bundle bundle = this.getArguments();
             branchName = bundle.getString("branchName");
             accountNo = bundle.getInt("accountNo");
@@ -149,8 +157,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             balance = bundle.getInt("balance");
             accountInfoTxt.setText(accountNo + " - " + branchNo + "  " + branchName + " / " + balance + " TL");
         }
-
-        return view;
     }
 
     @OnClick(R.id.buttonSave)
@@ -242,6 +248,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             String json = gson.toJson(modelList);
             editor.putString("customer list", json);
             editor.apply();
+
+            getActivity().getFragmentManager().popBackStackImmediate("formFragment",0);
+            getActivity().getFragmentManager().popBackStack();
 
             Toast.makeText(getContext(), "Kayıt Başarılı", Toast.LENGTH_SHORT).show();
 

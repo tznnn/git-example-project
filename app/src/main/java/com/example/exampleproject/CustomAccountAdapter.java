@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -84,11 +85,15 @@ public class CustomAccountAdapter extends RecyclerView.Adapter<CustomAccountAdap
             bundle.putInt("accountNo", accountList.get(position).getAccountNo());
             bundle.putInt("branchNo", accountList.get(position).getBranchNo());
             bundle.putInt("balance", accountList.get(position).getAccountBalance());
-            FragmentForm nextFrag = new FragmentForm();
+
+            Fragment nextFrag =((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("createFormFragment");
             nextFrag.setArguments(bundle);
-            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainer, nextFrag, null)
+
+            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer,nextFrag)
                     .commit();
+
+
 
         }
     }
