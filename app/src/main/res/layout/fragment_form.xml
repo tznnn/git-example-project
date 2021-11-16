@@ -252,6 +252,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonOpenAccountFragment" />
 
+        <CheckBox
+            android:id="@+id/checkboxContractAccept"
+            android:layout_width="@dimen/unit32dp"
+            android:layout_height="@dimen/unit32dp"
+            android:layout_marginStart="@dimen/unit16dp"
+            android:layout_marginTop="@dimen/unit16dp"
+            android:enabled="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxPortfoy">
+
+        </CheckBox>
+
+        <TextView
+            android:id="@+id/textViewContract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/unit8dp"
+            android:layout_marginTop="18dp"
+            android:text="Sözleşmeyi kabul ediyorum."
+            android:textSize="@dimen/unit16dp"
+            app:layout_constraintStart_toEndOf="@+id/checkboxContractAccept"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxPortfoy" />
+
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
@@ -264,7 +287,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxPortfoy" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewContract" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

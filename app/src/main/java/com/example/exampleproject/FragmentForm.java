@@ -25,6 +25,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,6 +108,10 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     Button btnOpenAccountFragment;
     @BindView(R.id.editTextAccountInfo)
     EditText accountInfoTxt;
+    @BindView(R.id.textViewContract)
+    TextView contractTxt;
+    @BindView(R.id.checkboxContractAccept)
+    CheckBox contractAcceptCheck;
 
     ExampleAdapter myAdapter;
     ArrayList<ExampleItem> modelList;
@@ -113,7 +122,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public int genderId;
     public Uri uri;
     String tmpProfileImageUri, branchName;
-    int accountNo, branchNo, balance;
+    int accountNo, branchNo, balance, contractAccept;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,7 +149,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
                 }
             }
         });
-
+        contractAccept();
         return view;
     }
 
@@ -151,12 +160,29 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         if (this.getArguments() != null) {
 
             Bundle bundle = this.getArguments();
-            branchName = bundle.getString("branchName");
-            accountNo = bundle.getInt("accountNo");
-            branchNo = bundle.getInt("branchNo");
-            balance = bundle.getInt("balance");
-            accountInfoTxt.setText(accountNo + " - " + branchNo + "  " + branchName + " / " + balance + " TL");
+            if (bundle.getInt("contractAccept") == 0) {
+
+                branchName = bundle.getString("branchName");
+                accountNo = bundle.getInt("accountNo");
+                branchNo = bundle.getInt("branchNo");
+                balance = bundle.getInt("balance");
+                accountInfoTxt.setText(accountNo + " - " + branchNo + "  " + branchName + " / " + balance + " TL");
+                contractAcceptCheck.setChecked(false);
+
+            } else {
+                contractAccept = bundle.getInt("contractAccept");
+                contractAcceptCheck.setChecked(true);
+
+            }
+
         }
+
+
+    }
+
+    @OnClick(R.id.checkboxContractAccept)
+    public void contractClick() {
+        contractAccept();
     }
 
     @OnClick(R.id.buttonSave)
@@ -233,14 +259,15 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         checkBoxResults();
         String tmpCheckBoxResult = cbInvisibleTxt.getText().toString();
         String accountInfo = accountInfoTxt.getText().toString();
+        int tmpContractState = contractAccept;
 
         if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected
                 && tmpGenderId != -1 && tmpPhoneNumberLength == 17 && !tmpCheckBoxResult.isEmpty()
-                && !accountInfo.isEmpty()) {
+                && !accountInfo.isEmpty() && tmpContractState == 1) {
 
             textViewPhoneNumber.setTextColor(Color.BLACK);
 
-            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, tmpProfileImageUri, tmpCheckBoxResult);
+            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, tmpProfileImageUri, tmpCheckBoxResult, tmpContractState);
             myAdapter.notifyItemInserted(modelList.size());
             SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -249,7 +276,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             editor.putString("customer list", json);
             editor.apply();
 
-            getActivity().getFragmentManager().popBackStackImmediate("formFragment",0);
+            getActivity().getFragmentManager().popBackStackImmediate("formFragment", 0);
             getActivity().getFragmentManager().popBackStack();
 
             Toast.makeText(getContext(), "Kayıt Başarılı", Toast.LENGTH_SHORT).show();
@@ -294,6 +321,11 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             accountInfoTxt.setHintTextColor(Color.RED);
             accountInfoTxt.requestFocus();
             Toast.makeText(getContext(), "Lütfen bir hesap seçiniz", Toast.LENGTH_LONG).show();
+        } else if (tmpContractState == 0) {
+
+            contractTxt.setTextColor(Color.RED);
+            contractTxt.requestFocus();
+            Toast.makeText(getContext(), "Lütfen sözleşmeyi kabul ediniz", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -311,9 +343,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         }
     }
 
-    private void insertItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile, String checkboxAccountResult) {
+    private void insertItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile, String checkboxAccountResult, int contractState) {
         myAdapter = new ExampleAdapter(getContext(), modelList);
-        modelList.add(new ExampleItem(name, surname, date, phoneNumber, genderId, imageProfile, checkboxAccountResult));
+        modelList.add(new ExampleItem(name, surname, date, phoneNumber, genderId, imageProfile, checkboxAccountResult, contractState));
     }
 
     public void selectBirthday() {
@@ -378,6 +410,24 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
                 .replace(R.id.fragmentContainer, nextFrag, null)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void contractAccept() {
+        String contract = "Sözleşmeyi kabul etmek için tıklayınız";
+        SpannableString spannableString = new SpannableString(contract);
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View view) {
+                FragmentContract nextFrag = new FragmentContract();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer, nextFrag, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        };
+        spannableString.setSpan(clickableSpan, 0, 38, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        contractTxt.setText(spannableString);
+        contractTxt.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 }
