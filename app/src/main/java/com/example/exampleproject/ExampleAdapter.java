@@ -1,9 +1,12 @@
 package com.example.exampleproject;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +59,11 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder
 
         String nameSurname = name + " " + surname;
         holder.nameSurname.setText(nameSurname);
-        Picasso.get().load(profileImage).into(holder.profileImg);
+
+        byte[] decodedString = Base64.decode(profileImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        holder.profileImg.setImageBitmap(decodedByte);
+
     }
 
     @Override

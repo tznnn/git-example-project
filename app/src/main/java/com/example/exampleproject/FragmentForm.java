@@ -30,6 +30,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -123,6 +125,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public Uri uri;
     String tmpProfileImageUri, branchName;
     int accountNo, branchNo, balance, contractAccept;
+
+    String encodedImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -267,7 +271,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
             textViewPhoneNumber.setTextColor(Color.BLACK);
 
-            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, tmpProfileImageUri, tmpCheckBoxResult, tmpContractState);
+            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, encodedImage, tmpCheckBoxResult, tmpContractState);
             myAdapter.notifyItemInserted(modelList.size());
             SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -391,9 +395,27 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
             uri = data.getData();
             imgProfile.setImageURI(uri);
-            tmpProfileImageUri = uri.toString();
             imgSelected = true;
+
+            InputStream imageStream = null;
+            try {
+                imageStream = getActivity().getContentResolver().openInputStream(uri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            encodedImage = encodeImage(selectedImage);
         }
+    }
+
+    private String encodeImage(@NonNull Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        Log.i("TAG", "encodeImage: "+b.length);
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
     }
 
     public void checkBoxResults() {
