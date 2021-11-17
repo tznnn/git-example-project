@@ -44,7 +44,7 @@ public class FragmentContract extends Fragment implements OnPageScrollListener {
         Bundle bundle = new Bundle();
         bundle.putInt("contractAccept", 1);
 
-        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("createFormFragment");
+        Fragment fragment = new FragmentForm();
         fragment.setArguments(bundle);
 
         getActivity().getSupportFragmentManager().beginTransaction()

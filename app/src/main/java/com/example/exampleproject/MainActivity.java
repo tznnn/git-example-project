@@ -75,14 +75,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbar.setTitle("Anasayfa");
                 break;
             case R.id.navForm:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentForm()).commit();
-                Fragment nextFrag = new FragmentForm();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentForm()).commit();
+               /* Fragment nextFrag = new FragmentForm();
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragmentContainer, nextFrag, TAG);
                 fragmentTransaction.addToBackStack("formFragment");
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
 
                 toolbar.setTitle("Form Ekranı");
                 break;

@@ -106,4 +106,8 @@ public class PhoneNumber extends LinearLayout {
     public Editable getText() {
         return editTextPhone.getText();
     }
+
+    public void setText(String text) {
+        editTextPhone.setText(text);
+    }
 }

@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -62,6 +63,8 @@ import butterknife.OnClick;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import com.example.exampleproject.FormData;
 
 public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSetListener {
 
@@ -120,13 +123,16 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
     public ArrayList<String> checkBoxResult;
 
-    public boolean imgSelected;
-    public int genderId;
+    public boolean imgSelected, isCheckbox1, isCheckbox2, isCheckbox3, isCheckbox4;
+    public int genderId = -1;
     public Uri uri;
-    String tmpProfileImageUri, branchName;
+    String branchName;
     int accountNo, branchNo, balance, contractAccept;
 
     String encodedImage;
+    String imgUri = "";
+
+    // FormData data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -163,6 +169,44 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
         if (this.getArguments() != null) {
 
+
+            editTextName.setText(FormData.name);
+            editTextSurname.setText(FormData.surname);
+            editTextPhoneNumber.setText(FormData.phoneNumber);
+            editTextDate.setText(FormData.birthday);
+
+            if (!FormData.imageProfile.isEmpty()) {
+                imgUri = FormData.imageProfile;
+                imgProfile.setImageURI(Uri.parse(imgUri));
+                encodedImage = FormData.imageEncode;
+            }
+
+            genderId = FormData.genderId;
+            if (genderId == 0) {
+                radioButtonFemale.setChecked(true);
+            } else if (genderId == 1) {
+                radioButtonMale.setChecked(true);
+            }
+
+            if (FormData.isCheckbox1 == true) {
+                cbVadeli.setChecked(true);
+                checkboxVadeliClick();
+
+            }
+            if (FormData.isCheckbox2 == true) {
+                cbVadesiz.setChecked(true);
+                checkboxVadesizClick();
+            }
+            if (FormData.isCheckbox3 == true) {
+                cbPortfoy.setChecked(true);
+                checkBoxPortfoyClick();
+            }
+            if (FormData.isCheckbox4 == true) {
+                cbYatirim.setChecked(true);
+                checkBoxYatirimClick();
+            }
+
+
             Bundle bundle = this.getArguments();
             if (bundle.getInt("contractAccept") == 0) {
 
@@ -177,10 +221,31 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
                 contractAccept = bundle.getInt("contractAccept");
                 contractAcceptCheck.setChecked(true);
 
-            }
+                accountInfoTxt.setText(FormData.accounInfo);
+                Log.i("TAG", "onPause: " + FormData.accounInfo);
 
+            }
         }
 
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        FormData.name = editTextName.getText().toString();
+        FormData.surname = editTextSurname.getText().toString();
+        FormData.imageProfile = imgUri;
+        FormData.imageEncode = encodedImage;
+        FormData.birthday = editTextDate.getText().toString();
+        FormData.accounInfo = accountInfoTxt.getText().toString();
+        FormData.genderId = genderId;
+        FormData.phoneNumber = editTextPhoneNumber.getText().toString();
+        FormData.isCheckbox1 = isCheckbox1;
+        FormData.isCheckbox2 = isCheckbox2;
+        FormData.isCheckbox3 = isCheckbox3;
+        FormData.isCheckbox4 = isCheckbox4;
+        Log.i("TAG", "onPause: " + FormData.accounInfo);
 
     }
 
@@ -213,7 +278,10 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public void checkboxVadeliClick() {
         if (cbVadeli.isChecked()) {
             checkBoxResult.add(cbVadeli.getText().toString());
+            accountTypeTxt.setTextColor(Color.BLACK);
+            isCheckbox1 = true;
         } else {
+            isCheckbox1 = false;
             checkBoxResult.remove(cbVadeli.getText().toString());
         }
     }
@@ -223,7 +291,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         if (cbVadesiz.isChecked()) {
             checkBoxResult.add(cbVadesiz.getText().toString());
             accountTypeTxt.setTextColor(Color.BLACK);
+            isCheckbox2 = true;
         } else {
+            isCheckbox2 = false;
             checkBoxResult.remove(cbVadesiz.getText().toString());
         }
     }
@@ -233,7 +303,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         if (cbYatirim.isChecked()) {
             checkBoxResult.add(cbYatirim.getText().toString());
             accountTypeTxt.setTextColor(Color.BLACK);
+            isCheckbox3 = true;
         } else {
+            isCheckbox3 = false;
             checkBoxResult.remove(cbYatirim.getText().toString());
         }
     }
@@ -243,7 +315,9 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         if (cbPortfoy.isChecked()) {
             checkBoxResult.add(cbPortfoy.getText().toString());
             accountTypeTxt.setTextColor(Color.BLACK);
+            isCheckbox4 = true;
         } else {
+            isCheckbox4 = false;
             checkBoxResult.remove(cbPortfoy.getText().toString());
         }
     }
@@ -265,7 +339,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         String accountInfo = accountInfoTxt.getText().toString();
         int tmpContractState = contractAccept;
 
-        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && imgSelected
+        if (!tmpName.isEmpty() && !tmpSurname.isEmpty() && !tmpDate.isEmpty() && !imgUri.isEmpty()
                 && tmpGenderId != -1 && tmpPhoneNumberLength == 17 && !tmpCheckBoxResult.isEmpty()
                 && !accountInfo.isEmpty() && tmpContractState == 1) {
 
@@ -279,9 +353,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             String json = gson.toJson(modelList);
             editor.putString("customer list", json);
             editor.apply();
-
-            getActivity().getFragmentManager().popBackStackImmediate("formFragment", 0);
-            getActivity().getFragmentManager().popBackStack();
 
             Toast.makeText(getContext(), "Kayıt Başarılı", Toast.LENGTH_SHORT).show();
 
@@ -300,7 +371,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             editTextDate.setHintTextColor(Color.RED);
             editTextDate.requestFocus();
             Toast.makeText(getContext(), "Lütfen doğum tarihinizi seçiniz", Toast.LENGTH_LONG).show();
-        } else if (!imgSelected) {
+        } else if (imgUri.isEmpty()) {
 
             textViewProfile.setTextColor(Color.RED);
             textViewProfile.requestFocus();
@@ -394,6 +465,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         if (requestCode == requestCode && resultCode == RESULT_OK && data != null) {
 
             uri = data.getData();
+            imgUri = uri.toString();
             imgProfile.setImageURI(uri);
             imgSelected = true;
 
@@ -412,7 +484,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
-        Log.i("TAG", "encodeImage: "+b.length);
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
         return encImage;

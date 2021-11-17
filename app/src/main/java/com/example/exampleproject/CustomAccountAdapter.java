@@ -86,7 +86,7 @@ public class CustomAccountAdapter extends RecyclerView.Adapter<CustomAccountAdap
             bundle.putInt("branchNo", accountList.get(position).getBranchNo());
             bundle.putInt("balance", accountList.get(position).getAccountBalance());
 
-            Fragment nextFrag =((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("createFormFragment");
+            Fragment nextFrag =new FragmentForm();
             nextFrag.setArguments(bundle);
 
             ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
