@@ -110,9 +110,12 @@ public class FragmentConfirm extends Fragment {
         editor.putString("customer list", json);
         editor.apply();
 
-        FragmentHome fragmentHome = new FragmentHome();
+        FragmentResult fragmentResult = new FragmentResult();
+        Bundle bundle = new Bundle();
+        bundle.putString("nameSurname", name + " " + surname);
+        fragmentResult.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, fragmentHome, null)
+                .replace(R.id.fragmentContainer, fragmentResult, null)
                 .addToBackStack(null)
                 .commit();
     }
