@@ -118,9 +118,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     @BindView(R.id.checkboxContractAccept)
     CheckBox contractAcceptCheck;
 
-    ExampleAdapter myAdapter;
-    ArrayList<ExampleItem> modelList;
-
     public ArrayList<String> checkBoxResult;
 
     public boolean imgSelected, isCheckbox1, isCheckbox2, isCheckbox3, isCheckbox4;
@@ -142,7 +139,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         ButterKnife.bind(this, view);
         editTextDate.setEnabled(false);
         checkBoxResult = new ArrayList<>();
-        loadData();
+
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -168,7 +165,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         super.onResume();
 
         if (this.getArguments() != null) {
-
 
             editTextName.setText(FormData.name);
             editTextSurname.setText(FormData.surname);
@@ -206,9 +202,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
                 checkBoxYatirimClick();
             }
 
-
             Bundle bundle = this.getArguments();
-            if (bundle.getInt("contractAccept") == 0) {
+            if (bundle.getInt("contractAccept") == 0 && bundle.getInt("back") == 0) {
 
                 branchName = bundle.getString("branchName");
                 accountNo = bundle.getInt("accountNo");
@@ -222,12 +217,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
                 contractAcceptCheck.setChecked(true);
 
                 accountInfoTxt.setText(FormData.accounInfo);
-                Log.i("TAG", "onPause: " + FormData.accounInfo);
-
             }
         }
-
-
     }
 
     @Override
@@ -255,8 +246,8 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     }
 
     @OnClick(R.id.buttonSave)
-    public void saveClick() {
-        saveData();
+    public void continueClick() {
+        openConfirmFragment();
     }
 
     @OnClick(R.id.buttonProfilePhoto)
@@ -327,7 +318,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         accountSelectFragment();
     }
 
-    private void saveData() {
+    private void openConfirmFragment() {
         String tmpName = editTextName.getText().toString();
         String tmpSurname = editTextSurname.getText().toString();
         String tmpDate = editTextDate.getText().toString();
@@ -345,17 +336,35 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
 
             textViewPhoneNumber.setTextColor(Color.BLACK);
 
-            insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, encodedImage, tmpCheckBoxResult, tmpContractState);
-            myAdapter.notifyItemInserted(modelList.size());
-            SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+            //insertItem(tmpName, tmpSurname, tmpDate, tmpPhoneNumber, genderId, encodedImage, tmpCheckBoxResult, tmpContractState);
+            //myAdapter.notifyItemInserted(modelList.size());
+
+            Bundle confirmBundle = new Bundle();
+
+            confirmBundle.putString("name", tmpName);
+            confirmBundle.putString("surname", tmpSurname);
+            confirmBundle.putString("birthday", tmpDate);
+            confirmBundle.putString("phoneNumber", tmpPhoneNumber);
+            confirmBundle.putInt("gender", genderId);
+            confirmBundle.putString("accountInfo", accountInfo);
+            confirmBundle.putString("profileImage", encodedImage);
+            confirmBundle.putString("accountType", tmpCheckBoxResult);
+            confirmBundle.putInt("contractState", tmpContractState);
+
+            Fragment fragment = new FragmentConfirm();
+            fragment.setArguments(confirmBundle);
+
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .commit();
+
+           /* SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             Gson gson = new Gson();
             String json = gson.toJson(modelList);
             editor.putString("customer list", json);
             editor.apply();
-
-            Toast.makeText(getContext(), "Kayıt Başarılı", Toast.LENGTH_SHORT).show();
-
+*/
         } else if (tmpName.isEmpty()) {
 
             editTextName.setHintTextColor(Color.RED);
@@ -403,24 +412,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
             Toast.makeText(getContext(), "Lütfen sözleşmeyi kabul ediniz", Toast.LENGTH_LONG).show();
         }
 
-    }
-
-    private void loadData() {
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("customer list", null);
-        Type type = new TypeToken<ArrayList<ExampleItem>>() {
-        }.getType();
-        modelList = gson.fromJson(json, type);
-
-        if (modelList == null) {
-            modelList = new ArrayList<>();
-        }
-    }
-
-    private void insertItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile, String checkboxAccountResult, int contractState) {
-        myAdapter = new ExampleAdapter(getContext(), modelList);
-        modelList.add(new ExampleItem(name, surname, date, phoneNumber, genderId, imageProfile, checkboxAccountResult, contractState));
     }
 
     public void selectBirthday() {
@@ -492,7 +483,7 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
     public void checkBoxResults() {
         StringBuilder stringBuilder = new StringBuilder();
         for (String s : checkBoxResult) {
-            stringBuilder.append(s).append(" ");
+            stringBuilder.append(s).append("/");
             cbInvisibleTxt.setText(stringBuilder.toString());
         }
     }
@@ -522,5 +513,6 @@ public class FragmentForm extends Fragment implements DatePickerDialog.OnDateSet
         contractTxt.setText(spannableString);
         contractTxt.setMovementMethod(LinkMovementMethod.getInstance());
     }
+
 
 }

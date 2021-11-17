@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentConfirm">
+
+    <TextView
+        android:id="@+id/labelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit16dp"
+        android:layout_marginTop="@dimen/unit16dp"
+        android:text="Ad :"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit4dp"
+        android:layout_marginTop="@dimen/unit16dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/labelName"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/labelSurname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit16dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:text="Soyad :"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewSurname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit4dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/labelSurname"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/labelBirhtday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit16dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:text="Doğum Tarihi :"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSurname">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewBirthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit4dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/labelBirhtday"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSurname">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/labelAccountInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit16dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:text="Hesap Bilgileri :"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBirthday">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewAccountInfo"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/labelAccountInfo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBirthday">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/labelGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit16dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:text="Cinsiyet :"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccountInfo">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit4dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/labelGender"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccountInfo">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/labelProfileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit16dp"
+        android:layout_marginTop="50dp"
+        android:text="Profil Fotoğrafı :"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGender">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/imageViewProfilePhoto"
+        android:layout_width="@dimen/unit100dp"
+        android:layout_height="@dimen/unit100dp"
+        android:layout_marginStart="@dimen/unit4dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintStart_toEndOf="@+id/labelProfileImage"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGender">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/labelPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit16dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:text="Telefon Numarası :"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfilePhoto">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit4dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/labelPhoneNumber"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfilePhoto">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/labelAccountType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit16dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:text="Hesap tipi :"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewAccountType"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/unit4dp"
+        android:layout_marginTop="@dimen/unit8dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/labelAccountType"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneNumber">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/buttonConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
+        android:text="Onayla"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccountType">
+
+    </Button>
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:text="Geri Dön"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccountType">
+
+    </Button>
+</androidx.constraintlayout.widget.ConstraintLayout>

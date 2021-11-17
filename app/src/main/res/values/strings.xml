@@ -22,4 +22,5 @@
     <string name="vadeli_hesap">Vadeli Hesap</string>
     <string name="hesap_tipi">Hesap Tipi :</string>
     <string name="secilen_hesap_bilgileri">Seçilen Hesap Bilgileri</string>
+    <string name="devam_et">devam et</string>
 </resources>

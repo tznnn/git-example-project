@@ -283,7 +283,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="@dimen/unit16dp"
             android:layout_marginBottom="@dimen/unit16dp"
-            android:text="@string/kaydet"
+            android:text="@string/devam_et"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

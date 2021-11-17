@@ -10,9 +10,10 @@ public class ExampleItem {
     private int genderId;
     private String imageProfile;
     private String checkboxAccountType;
+    private String accountInfo;
     private int contractState;
 
-    public ExampleItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile, String checkboxAccountType, int contractState) {
+    public ExampleItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile, String checkboxAccountType, String accountInfo, int contractState) {
         this.name = name;
         this.surname = surname;
         this.date = date;
@@ -20,6 +21,7 @@ public class ExampleItem {
         this.genderId = genderId;
         this.imageProfile = imageProfile;
         this.checkboxAccountType = checkboxAccountType;
+        this.accountInfo = accountInfo;
         this.contractState = contractState;
     }
 
@@ -77,6 +79,14 @@ public class ExampleItem {
 
     public void setCheckboxAccountType(String checkboxAccountType) {
         this.checkboxAccountType = checkboxAccountType;
+    }
+
+    public String getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(String accountInfo) {
+        this.accountInfo = accountInfo;
     }
 
     public int getContractState() {
