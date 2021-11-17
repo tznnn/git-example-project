@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -57,7 +58,9 @@ public class FragmentFormDetail extends Fragment {
 
     private void buildRecyclerView() {
         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-        myAdapter = new ExampleAdapter(getContext(), modelList);
+        myAdapter = new ExampleAdapter(getContext(), modelList, exampleItem -> {
+            Toast.makeText(getContext(), ""+exampleItem.getName(), Toast.LENGTH_SHORT).show();
+        });
         rcv.setAdapter(myAdapter);
     }
 }

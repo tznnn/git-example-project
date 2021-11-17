@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -135,7 +136,9 @@ public class FragmentConfirm extends Fragment {
     }
 
     private void insertItem(String name, String surname, String date, String phoneNumber, int genderId, String imageProfile, String checkboxAccountResult, String accountInfo, int contractState) {
-        myAdapter = new ExampleAdapter(getContext(), modelList);
+        myAdapter = new ExampleAdapter(getContext(), modelList, exampleItem -> {
+            Toast.makeText(getContext(), ""+exampleItem.getName(), Toast.LENGTH_SHORT).show();
+        });
         modelList.add(new ExampleItem(name, surname, date, phoneNumber, genderId, imageProfile, checkboxAccountResult, accountInfo, contractState));
     }
 

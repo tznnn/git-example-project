@@ -4,10 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.Image;
-import android.net.Uri;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +16,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
 import java.util.ArrayList;
 
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder> {
     Context context;
     ArrayList<ExampleItem> mExampleList;
 
-    public ExampleAdapter(Context context, ArrayList<ExampleItem> mExampleList) {
+    public interface ExampleItemSelectedListener {
+        void onSelected(ExampleItem exampleItem);
+    }
+
+    ExampleItemSelectedListener exampleItemSelectedListener;
+
+    public ExampleAdapter(Context context, ArrayList<ExampleItem> mExampleList, ExampleItemSelectedListener exampleItemSelectedListener) {
         this.context = context;
         this.mExampleList = mExampleList;
+        this.exampleItemSelectedListener = exampleItemSelectedListener;
     }
 
 
@@ -63,6 +64,8 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder
         byte[] decodedString = Base64.decode(profileImage, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         holder.profileImg.setImageBitmap(decodedByte);
+        holder.itemView.setOnClickListener(view -> exampleItemSelectedListener.onSelected(mExampleList.get(position))
+        );
 
     }
 
@@ -85,7 +88,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyHolder
             profileImg = itemView.findViewById(R.id.itemImage);
             relativeLayout = itemView.findViewById(R.id.rowItemLayout);
 
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
         @Override
